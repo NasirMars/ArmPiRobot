@@ -316,17 +316,16 @@ def move():
                     y_dis=0.12 if y_dis < 0.12 else y_dis
                     y_dis=0.28 if y_dis > 0.28 else y_dis
 
-                    # 机械臂追踪移动到色块上方
                     target = ik.setPitchRanges((0, round(y_dis, 4), 0.03), -180, -180, 0)
                     if target:
                         servo_data = target[1]
                         bus_servo_control.set_servos(joints_pub, 20,((3, servo_data['servo3']),         
                              (4, servo_data['servo4']),(5, servo_data['servo5']), (6, x_dis)))
                     
-                    if dx < 2 and dy < 0.003 and not stable: # 等待机械臂稳定停在色块上方
+                    if dx < 2 and dy < 0.003 and not stable:
                         num += 1
                         if num == 10:
-                            stable = True  # 设置可以夹取
+                            stable = True
                             num = 0
                     else:
                         num = 0
